@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/user.js');
 
-router.get('/sign-up', (req, res) => {
+router.get('/sign-up', (req, res) => { //! this path is /auth/sign-up in the browser but here it's only /sign-up
   res.render('auth/sign-up.ejs');
 });
 

@@ -49,13 +49,11 @@ app.get('/vip-lounge', (req, res) => {
 });
 
 app.use('/auth', authController);
+//! above line means that any route that reaches authController already has the url localhost:3000/auth in it, so all url paths in the controller must exclude /auth at the start of their urls
 
 // mount listings controller
-app.use('/listings', isSignedIn, listingsController);
-
-// app.get("/listings", (req, res) => {
-//     res.send("“Listings index page”");
-// })
+app.use('/listings', listingsController);
+//isSignedIn,
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

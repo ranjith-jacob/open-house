@@ -5,10 +5,14 @@ const router = express.Router();
 
 const Listing = require('../models/listing.js');
 
-app.get("/listings", async (req, res) => {
-    const allListings = await Listing.find();
-    console.log("all of the listings", allListings); // not working yet
-    // res.send("“Listings index page”");
+router.get("/", async (req, res) => { // changed "/listings" to "/"
+    try {const allListings = await Listing.find();
+    console.log("all of the listings", allListings);
+    // res.send("Listings index page");
+    res.render("./listings/index.ejs"); // completes Listings Landing pg
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 module.exports = router;
