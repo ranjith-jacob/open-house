@@ -1,9 +1,7 @@
 // models/listing.js
 
 const mongoose = require('mongoose');
-const express = require('express');
-const router = express.Router();
-const Listing = require('../models/listing');
+
 
 const listingSchema = new mongoose.Schema({
 streetAddress: {
@@ -33,4 +31,3 @@ streetAddress: {
 const Listing = mongoose.model('Listing', listingSchema);
 
 module.exports = Listing;
-module.exports = router;
