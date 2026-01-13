@@ -49,8 +49,13 @@ app.get('/vip-lounge', (req, res) => {
 });
 
 app.use('/auth', authController);
+
 // mount listings controller
 app.use('/listings', isSignedIn, listingsController);
+
+// app.get("/listings", (req, res) => {
+//     res.send("“Listings index page”");
+// })
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
