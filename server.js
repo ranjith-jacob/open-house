@@ -52,8 +52,9 @@ app.use('/auth', authController);
 //! above line means that any route that reaches authController already has the url localhost:3000/auth in it, so all url paths in the controller must exclude /auth at the start of their urls
 
 // mount listings controller
-app.use('/listings', listingsController);
-//isSignedIn,
+app.use('/listings', isSignedIn, listingsController); 
+// need to investigate isSignedIn for sessions
+// app.use('/listings', listingsController);
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

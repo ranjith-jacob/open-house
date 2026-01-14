@@ -15,4 +15,16 @@ router.get("/", async (req, res) => { // changed "/listings" to "/"
     }
 });
 
+router.get("/new", async (req, res) => {
+    // res.send("hello I'm about");
+    res.render("listings/new.ejs");
+})
+
+router.post("/", async (req, res) => {
+    console.log("Who is the user", req.session.user._id);
+    req.body.owner = req.session.user._id; // assign signed in user to listing as owner
+    console.log("Form data received", req.body);
+    await Listing.create(req.body);
+    res.redirect("/listings");
+})
 module.exports = router;
