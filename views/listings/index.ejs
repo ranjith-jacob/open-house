@@ -11,6 +11,14 @@
     <%- include("../partials/_navbar.ejs") %>
 
     <h1>Here's all the Listings</h1>
+    <p>Please see details below</p>
+    
     <a href="/listings/new">Add a new Listing</a>
+    <ul>
+      <% listings.forEach((listing) => { %>
+        <li>A listing in <%= listing.city %> owned by <%= listing.owner.username %></li>
+        <a href="/listings/<%= listing._id %>">View more details here!</a>
+      <% }) %>
+    </ul>
   </body>
 </html>

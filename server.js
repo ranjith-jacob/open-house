@@ -6,12 +6,14 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const morgan = require('morgan');
 const session = require('express-session');
+const MongoStore = require("connect-mongo");
+
 const isSignedIn = require('./middleware/is-signed-in.js');
 const passUserToView = require('./middleware/pass-user-to-view.js');
 
 const authController = require('./controllers/auth.js');
 // add listings controller:
-const listingsController = require('./controllers/listings.js');
+const listingsController = require('./controllers/listings'); // listings or listings.js?
 
 const port = process.env.PORT ? process.env.PORT : '3000';
 
@@ -29,6 +31,9 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+    })
   })
 );
 

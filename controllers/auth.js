@@ -13,8 +13,11 @@ router.get('/sign-in', (req, res) => {
 });
 
 router.get('/sign-out', (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
+  req.session.destroy(() => {
+    res.redirect('/');
+  })
+  // req.session.destroy();
+  // res.redirect('/'); related to connect-mongo
 });
 
 router.post('/sign-up', async (req, res) => {
@@ -69,8 +72,10 @@ router.post('/sign-in', async (req, res) => {
       username: userInDatabase.username,
       _id: userInDatabase._id
     };
-  
-    res.redirect('/');
+    req.session.save(() => {
+      res.redirect('/');
+    })
+    // res.redirect('/'); Connect-Mongo related
   } catch (error) {
     console.log(error);
     res.redirect('/');
