@@ -26,6 +26,14 @@ streetAddress: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+// when adding favouriting, need a many-to-many relationship
+  favouritedByUsers: [
+    //references to documents in the user collection
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ]
 });
 
 const Listing = mongoose.model('Listing', listingSchema);

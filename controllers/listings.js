@@ -99,4 +99,24 @@ router.put('/:listingId', async (req, res) => {
   }
 })
 
+// add a favourite to a listing
+router.post("/:listingId/favourited-by/:userId", async (req, res) => {
+    try {
+        // console.log("userId:", req.params.userId);
+        //findByIdAndUpdate - this will be used to find the listing and updaated the favouritedByUsers array; it'll take two arguments
+        //$push - this is mongo's push operator
+        // console.log("listingId:", req.params.listingId);
+        await Listing.findByIdAndUpdate(req.params.listingId, {
+            $push: {favouritedByUsers: req.params.userId},
+        })
+        res.redirect(`/listings/${req.params.listingId}`);
+        // res.send(`request to favourite ${req.params.listingId}`);
+    } catch (error) {
+        console.log(error);
+        res.redirect("/");
+    }
+})
+
 module.exports = router;
+
+// <favourited by> route: POST, /listings/:listingId/favourited-by/:userId
