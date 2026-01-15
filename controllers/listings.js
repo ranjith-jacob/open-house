@@ -9,7 +9,7 @@ const Listing = require('../models/listing'); // is this supposed to be listing 
 router.get("/", async (req, res) => { // changed "/listings" to "/"
     try {
         const getAllListings = await Listing.find({}).populate("owner"); // changed const allListings to const getAllListings to stay consistent with class codealong
-        console.log("all of the listings", getAllListings); // changed allListings to const getAllListings to stay consistent with class codealong
+        // console.log("all of the listings", getAllListings); // changed allListings to const getAllListings to stay consistent with class codealong
         // res.send("Listings index page");
         res.render("./listings/index.ejs", {
             listings: getAllListings,
@@ -72,7 +72,7 @@ router.delete('/:listingId', async (req, res) => {
     // locate listing in the db
     const listing = await Listing.findById(req.params.listingId);
     if (listing.owner.equals(req.session.user._id)) {
-      console.log('permission granted')
+    //   console.log('permission granted')
       await listing.deleteOne();
       res.redirect('/listings');
     } else {
@@ -83,6 +83,21 @@ router.delete('/:listingId', async (req, res) => {
     res.redirect('/');
   }
 })
+
+router.delete('/:listingId/favourited-by/:userId', async (req, res) => {
+  try {
+    // console.log('userId: ', req.params.userId);
+    // console.log('listingId: ', req.params.listingId);
+    // res.send(`Request to unfavourite ${req.params.listingId}`);
+    await Listing.findByIdAndUpdate(req.params.listingId, {
+      $pull: { favouritedByUsers: req.params.userId },
+    });
+    res.redirect(`/listings/${req.params.listingId}`);
+  } catch (error) {
+    console.log(error);
+    res.redirect('/');
+  }
+});
 
 // edit the listing form
 router.get('/:listingId/edit', async (req, res) => {

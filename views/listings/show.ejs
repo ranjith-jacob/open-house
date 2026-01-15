@@ -27,6 +27,12 @@
   <p>Favourited by <%= listing.favouritedByUsers.length %> people.</p>
   <% if (userHasFavourited) { %>
         <p>You have favourited this listing!</p>
+
+        <form
+            action="/listings/<%= listing._id %>/favourited-by/<%= user._id %>?_method=DELETE" method="POST"
+        >
+            <button type="submit">Unfavorite it</button>
+        </form>
   <% } else { %>
         <p>You have not favourited this listing</p>
         <form action="/listings/<%=listing._id%>/favourited-by/<%= user._id %>" method="POST">
