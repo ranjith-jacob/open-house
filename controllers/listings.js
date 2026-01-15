@@ -36,14 +36,28 @@ router.post("/", async (req, res) => {
     res.redirect("/listings");
 })
 
-// get a specific listing
+// get a specific listing; this is the show controller
 router.get('/:listingId', async (req, res) => {
   try {
     const populatedListing = await Listing.findById(
       req.params.listingId
     ).populate('owner');
+    const userHasFavourited = populatedListing.favouritedByUsers.some ((user) => {
+        // console.log("user", user);
+        // console.log("user type", typeof user);
+        // console.log("session id", typeof req.session.user._id);
+        // user.equals(req.session.user._id); // returns boolean
+
+        // convert the user from objectID to a string value, then do a strict equality
+        // user.toString.equals(req.session.user._id) //! this is wrong, to do myself
+        return user == req.session.user._id;
+    }); // some - array method that returns boolean
+    // console.log("user has favourited", userHasFavourited);
+    // console.log("user ID from session", req.session.user._id);
+    // console.log("user ID from favourited listing", populatedListing.favouritedByUsers);
     res.render('listings/show.ejs', {
       listing: populatedListing,
+      userHasFavourited: userHasFavourited,
     });
   } catch (error) {
     console.log(error);

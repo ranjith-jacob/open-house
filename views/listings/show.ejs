@@ -25,9 +25,14 @@
   <!-- Add the listingId & userId -->
   <h2>Favourites</h2>
   <p>Favourited by <%= listing.favouritedByUsers.length %> people.</p>
-  <form action="/listings/<%=listing._id%>/favourited-by/<%= user._id %>" method="POST">
-    <button type="submit">Favourite!</button>
-  </form>
+  <% if (userHasFavourited) { %>
+        <p>You have favourited this listing!</p>
+  <% } else { %>
+        <p>You have not favourited this listing</p>
+        <form action="/listings/<%=listing._id%>/favourited-by/<%= user._id %>" method="POST">
+            <button type="submit">Favourite!</button>
+        </form>
+  <% } %>
   
 </body>
 </html>
